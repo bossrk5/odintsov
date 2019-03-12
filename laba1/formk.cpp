@@ -1,4 +1,5 @@
 #include "common.h"
+#include <memory.h> //для memset
 
 //Подпрограмма формирования матрицы жетскостей элемента
 int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4])
@@ -30,7 +31,7 @@ int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4])
 int formk(const struct INPUT_INFO*ii, struct SOLVE_INFO*si) 
 {
 	int ie, df, iv;
-	const double L = 1e20; //параметр метода Айнса-Пена точность -20 степень
+	const double L = 1e20; //параметр метода Аронса-Пейна точность -20 степень
 	//очистка матрицы
 	memset(si,0,sizeof(*si)); //очистка параметров решателя
 	//число степеней свободы задачи
@@ -56,6 +57,13 @@ int formk(const struct INPUT_INFO*ii, struct SOLVE_INFO*si)
 		si->F[ndf] += ii->force[iv].f;//добавляемое значение силы
 
 	}
+	for (iv = 0; iv < ii->n_displ; ++iv)  //цикл по заданным перемещ/поворотам
+	{
+		int ndf = ii->displ[iv].nd * 2 + ii->displ[iv].df;
+		si->K[ndf][0] = L; //Метод Айронса-Пейна
+		si->F[ndf] = L * ii->displ[iv].d;
+	}
+	return 0;
 
 
 }
