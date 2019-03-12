@@ -152,8 +152,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="formk.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="laba1.cpp" />
+    <ClCompile Include="results.cpp" />
+    <ClCompile Include="Solve.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
