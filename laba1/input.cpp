@@ -1,7 +1,6 @@
 #include "common.h" //заголовок подключили
 #include <string.h> //сист.библиотека
 #include <iostream>
-//#include "stdafx.h" //компил€тор требует
 using namespace std;
 
 //подпрограмма не видна из других модулей
@@ -14,9 +13,9 @@ static int input_mat(const char*buf, struct INPUT_INFO*ii)
 	int ind;//индекс в таблице материалов
 	double E;//модуль ёнга
 
-	//стандартна€ подрограмма разбора строки, возвращает кол-во параметров которые удалось разобрать
+			 //стандартна€ подрограмма разбора строки, возвращает кол-во параметров которые удалось разобрать
 	n = sscanf(buf, "%d %lg", &ind, &E); //%d - целочисленный int; %lg - double; &ind получает адрес(указатель на переменную ind) по имени переменной
-	//при ошибке вернет кол-во верно прочитанных параметров ( к примеру 1)
+										 //при ошибке вернет кол-во верно прочитанных параметров ( к примеру 1)
 	if (n != 2)
 	{
 		fprintf(stderr, "ѕлохой материал: %s\n", buf); //s-строка
@@ -59,9 +58,9 @@ static int input_sec(const char*buf, struct INPUT_INFO*ii)
 static int input_beam(const char*buf, struct INPUT_INFO*ii)
 {
 	int n; //число прочитанных параметров
-	//указатель на параметры текущего участка
+		   //указатель на параметры текущего участка
 	struct BEAM_INFO*beam = ii->beam + ii->n_beam; //ii->beam им€ массива = указатель 1ого элемента + увеличение на n_beam - текушеее количество элементов балки
-	//может оказать что участков много и превысили размеры maxbeam
+												   //может оказать что участков много и превысили размеры maxbeam
 	if (ii->n_beam == MAX_BEAM)
 	{
 		fprintf(stderr, "—лишком много балок, ты тупо ошибс€!\n");
@@ -131,7 +130,7 @@ static int input_force(const char*buf, struct INPUT_INFO*ii)
 }
 
 //ввод распределенной нагрузки
-static int input_force(const char*buf, struct INPUT_INFO*ii)
+static int input_q(const char*buf, struct INPUT_INFO*ii)
 {
 	int n;//число прочитанных параметров
 	struct BEAM_INFO*beam = ii->beam + ii->n_beam - 1;
@@ -156,6 +155,26 @@ static int input_force(const char*buf, struct INPUT_INFO*ii)
 	return 0;
 }
 
+//¬вод числа разбиений
+int input_ndiv(const char*buf, struct INPUT_INFO*ii)
+{
+	int n;
+
+	n = sscanf(buf, "%d", &ii->ndiv_cur);
+	if (n != 1)
+	{
+		fprintf(stderr, "ѕлохие параметры ndiv: %s", buf);
+		return -14;
+
+	}
+	if (ii->ndiv_cur <= 0)
+	{
+		fprintf(stderr, "ѕлохое значение ndiv: %d\n", ii->ndiv_cur);
+		return -15;
+	}
+	return 0;
+}
+
 //---реализаци€ подпрограммы
 int input(FILE*in, struct INPUT_INFO*ii)
 {
@@ -166,7 +185,7 @@ int input(FILE*in, struct INPUT_INFO*ii)
 
 	ii->ndiv_cur = DEF_NDIV; //начальное число разбиений; разбиение по умолчанию
 
-	//цикл ввода строк
+							 //цикл ввода строк
 	while (fgets(buf, sizeof(buf), in))//сист функци€ ввода строки in - дескриптор файла
 	{
 		int n = strspn(buf, " \t");//число нензначащих символов (в начале строки) пропускаем пробелы и \t - символ табул€ции
