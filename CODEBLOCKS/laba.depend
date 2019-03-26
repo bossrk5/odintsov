@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1553587649 source:c:\users\admin\documents\rk5-22m\laba\formk.c
+	"common.h"
+	<memory.h>
+	<string.h>
+
+1553588464 c:\users\admin\documents\rk5-22m\laba\common.h
+	<stdio.h>
+
+1553589548 source:c:\users\admin\documents\rk5-22m\laba\main.c
+	"common.h"
+	<stdio.h>
+	<stdlib.h>
+
+1553587685 source:c:\users\admin\documents\rk5-22m\laba\solve.c
+	"common.h"
+
+1553590719 source:c:\users\admin\documents\rk5-22m\laba\input.c
+	"common.h"
+	<string.h>
+
+1553588026 source:c:\users\admin\documents\rk5-22m\laba\results.c
+	"common.h"
+
