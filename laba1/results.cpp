@@ -95,7 +95,7 @@ int results(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, FILE*out)
 			//вычисление результатов в сечении
 			getri(ii, si->Q + ie * 2, Fe, ie, z, &ri);
 			//вывод результатов в файл
-			fprintf(out, "%g %d %g %g %g %g %g %g\n",
+			fprintf(out, "%g %f %g %g %g %g %g %g\n",
 				ri.z, ri.ie, ri.p, ri.Qy, ri.Mx, ri.theta, ri.v, ri.sigma);
 		}
 		//координату левого узла текущего элемента увеличить на длину элемента
