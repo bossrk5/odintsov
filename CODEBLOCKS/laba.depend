@@ -22,3 +22,21 @@
 1553588026 source:c:\users\admin\documents\rk5-22m\laba\results.c
 	"common.h"
 
+1553587650 source:c:\users\vladimir\documents\github\odintsov\codeblocks\formk.c
+	"common.h"
+	<memory.h>
+	<string.h>
+
+1553588466 c:\users\vladimir\documents\github\odintsov\codeblocks\common.h
+	<stdio.h>
+
+1553590972 source:c:\users\vladimir\documents\github\odintsov\codeblocks\input.c
+	"common.h"
+	<string.h>
+
+1553588028 source:c:\users\vladimir\documents\github\odintsov\codeblocks\results.c
+	"common.h"
+
+1553587686 source:c:\users\vladimir\documents\github\odintsov\codeblocks\solve.c
+	"common.h"
+

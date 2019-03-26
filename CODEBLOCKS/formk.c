@@ -2,7 +2,7 @@
 #include "common.h"
 #include <memory.h> //для memset
 #include <string.h>
-
+//Проверить ВСЕ ТУТ
 //Подпрограмма формирования матрицы жетскостей элемента
 int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4])
 {

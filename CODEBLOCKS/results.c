@@ -31,6 +31,8 @@ int getri(const struct INPUT_INFO*ii, const double Qe[4], const double Fe[4],
 	double p1 = beam->p1, dp = beam->p2 - beam->p1;
 	double EIx = ii->mat[beam->mat].E*ii->sec[beam->sec].Ix;
 
+//Проверить ВСЕ ТУТ
+
 	//вычисление актуального значения распред нагрузки
 	ri->p = p1 + dp * z / beam->l; //z/l =безразмерный от 0 до 1, то p = p1;p2
 	//поперечная сила

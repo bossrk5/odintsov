@@ -6,8 +6,8 @@
 #include <stdlib.h>
 
 struct INPUT_INFO ii;
-struct SOLV
-E_INFO si;
+struct SOLVE_INFO si;
+
 
 int main()
 {
@@ -34,7 +34,7 @@ int main()
 	r = formk(&ii, &si);
 	if (r) //!=0
 	{
-		fprintf(stderr, "formk ошибка: %d\n", r); //ошибка
+		fprintf(stderr, "formk error: %d\n", r); //ошибка
 		return 3;
 	}
 	//решение системы уравнений задачи
