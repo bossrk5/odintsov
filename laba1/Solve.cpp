@@ -39,7 +39,7 @@ static void solve_band_2(const double A[MAX_NDF][MAX_BAND], const double F[MAX_N
 	for (i = n - 1; i >= 0; --i) //цикл по строкам снизу вверх
 	{
 		int p = b;
-		double s = F[i]; 
+		double s = F[i];
 		//Берем Fi и вычитаем сумму известных элемнтов и делим на диаг. элемент - получаем перемещение
 		if (i + p > n)
 		{
@@ -47,7 +47,7 @@ static void solve_band_2(const double A[MAX_NDF][MAX_BAND], const double F[MAX_N
 		}
 		for (j = 1; j < p; ++j)
 		{
-			s -= A[i][j] * Q[i + j]; 
+			s -= A[i][j] * Q[i + j];
 		}
 		Q[i] = s / A[i][0];
 
@@ -60,3 +60,4 @@ int solve(struct SOLVE_INFO*si)
 	solve_band_2(si->K, si->F, si->Q, si->ndf, MAX_BAND);
 	return 0;
 }
+

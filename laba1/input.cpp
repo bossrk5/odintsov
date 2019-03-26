@@ -1,7 +1,8 @@
+
 #include "common.h" //заголовок подключили
 #include <string.h> //сист.библиотека
-#include <iostream>
-using namespace std;
+
+
 
 //подпрограмма не видна из других модулей
 //char*buf - указатель на строку с именем буф
@@ -18,12 +19,12 @@ static int input_mat(const char*buf, struct INPUT_INFO*ii)
 										 //при ошибке вернет кол-во верно прочитанных параметров ( к примеру 1)
 	if (n != 2)
 	{
-		fprintf(stderr, "Плохой материал: %s\n", buf); //s-строка
-		return -2;//признак ошибки 
+		fprintf(stderr, " bad material: %s\n", buf); //s-строка
+		return -2;//признак ошибки
 	}
 	if (ind < 0 || ind >= MAX_MAT)
 	{
-		fprintf(stderr, "Индекс плохого материала: %d\n", ind); //к примеру модуль Юнга
+		fprintf(stderr, "index bad mat: %d\n", ind); //к примеру модуль Юнга
 		return -3;
 	}
 	//запись значения в струкруту по указателю
@@ -41,12 +42,12 @@ static int input_sec(const char*buf, struct INPUT_INFO*ii)
 	n = sscanf(buf, "%d %lg %lf", &ind, &Ix, &Wx);
 	if (n != 3) //ошибка
 	{
-		fprintf(stderr, "Плохое сечение: %s\n", buf);
+		fprintf(stderr, "bad sec: %s\n", buf);
 		return -4;
 	}
 	if (ind < 0 || ind >= MAX_SEC)
 	{
-		fprintf(stderr, "Индекс плохого сечения: %d\n", ind);
+		fprintf(stderr, "bad sec index: %d\n", ind);
 		return -5;
 	}
 	ii->sec[ind].Ix = Ix; //записываем
@@ -63,15 +64,15 @@ static int input_beam(const char*buf, struct INPUT_INFO*ii)
 												   //может оказать что участков много и превысили размеры maxbeam
 	if (ii->n_beam == MAX_BEAM)
 	{
-		fprintf(stderr, "Слишком много балок, ты тупо ошибся!\n");
+		fprintf(stderr, "too many beams!\n");
 		return -6;
 	}
 
-	n = scanf(buf, "%lg %d %d", &beam->l, &beam->mat, &beam->sec);
+	n = sscanf(buf, "%lg %d %d", &beam->l, &beam->mat, &beam->sec);
 
 	if (n != 3)
 	{
-		fprintf(stderr, "Плохие параметры балки, ля: %s\n", buf);
+		fprintf(stderr, "bad beam parameters: %s\n", buf);
 		return -7;
 	}
 
@@ -88,7 +89,7 @@ static int input_displ(const char*buf, struct INPUT_INFO*ii)
 	struct DISPL_INFO*displ = ii->displ + ii->n_displ;
 	if (ii->n_displ == MAX_DISPL) //число заданных перемещений  превышает макс
 	{
-		fprintf(stderr, "Слишком много перемещений, я не могу с тобой работать!\n");
+		fprintf(stderr, "too many vars!\n");
 		return -8;
 	}
 	n = sscanf(buf, "%d %lg", &displ->df, &displ->d); //ввод параметров перемещ.
@@ -100,7 +101,7 @@ static int input_displ(const char*buf, struct INPUT_INFO*ii)
 		displ->d = 0;//значение перемещения по умолчанию
 		break;
 	default: //остальные ситуации - ошибка
-		fprintf(stderr, "Плохие перемещения, ты безнадежен: %s\n", buf); //вывод сообщ. об ошибке
+		fprintf(stderr, "bad displ: %s\n", buf); //вывод сообщ. об ошибке
 		return -9; //возврат признака ошибки
 	}
 	displ->nd = ii->n_beam;// номер узла совпадает с номером участка
@@ -115,13 +116,13 @@ static int input_force(const char*buf, struct INPUT_INFO*ii)
 	struct FORCE_INFO*force = ii->force + ii->n_force;// текущий элемент таблицы сил
 	if (ii->n_force >= MAX_FORCE) //превышено число сосредоточ сил
 	{
-		fprintf(stderr, "слишком много сил\n");
+		fprintf(stderr, "too much forces\n");
 		return -10;
 	}
-	n = sscanf(buf, "%d $lg", &force->df, &force->f);
+	n = sscanf(buf, "%d %lg", &force->df, &force->f);
 	if (n != 2)
 	{
-		fprintf(stderr, "Плохие сила или момент: %s\n", buf);//вывод ошибки
+		fprintf(stderr, "bad force/moment: %s\n", buf);//вывод ошибки
 		return -11;
 	}
 	force->nd = ii->n_beam;//номер узла
@@ -136,11 +137,11 @@ static int input_q(const char*buf, struct INPUT_INFO*ii)
 	struct BEAM_INFO*beam = ii->beam + ii->n_beam - 1;
 	if (ii->n_beam == 0) //если ещё участок не задан
 	{
-		fprintf(stderr, "Нужно задать параметры участка\n", buf);//вывод ошибки
+		fprintf(stderr, "parameters of beam erro %s\n", buf);//вывод ошибки
 		return -12;
 	}
 	//считали макс 2 значения
-	n = scanf(buf, "%lg %lg", &beam->p1, &beam->p2);//по указателю beam получаем размещение структуры, затем определяем размещение поля, а амперсанд вычисляет указатель на начало поля, в сканф передается указатель на начало поля в структуре
+	n = sscanf(buf, "%lg %lg", &beam->p1, &beam->p2);//по указателю beam получаем размещение структуры, затем определяем размещение поля, а амперсанд вычисляет указатель на начало поля, в сканф передается указатель на начало поля в структуре
 	switch (n)
 	{
 	case 2:
@@ -149,7 +150,7 @@ static int input_q(const char*buf, struct INPUT_INFO*ii)
 		beam->p2 = beam->p1;
 		break;
 	default:
-		fprintf(stderr, "Плохие параметры распред. нагрузки: %s\n", buf);//вывод ошибки
+		fprintf(stderr, "Bad forces: %s\n", buf);//вывод ошибки
 		return -13;
 	}
 	return 0;
@@ -163,13 +164,13 @@ int input_ndiv(const char*buf, struct INPUT_INFO*ii)
 	n = sscanf(buf, "%d", &ii->ndiv_cur);
 	if (n != 1)
 	{
-		fprintf(stderr, "Плохие параметры ndiv: %s", buf);
+		fprintf(stderr, "bad ndiv: %s", buf);
 		return -14;
 
 	}
 	if (ii->ndiv_cur <= 0)
 	{
-		fprintf(stderr, "Плохое значение ndiv: %d\n", ii->ndiv_cur);
+		fprintf(stderr, "bad ndiv: %d\n", ii->ndiv_cur);
 		return -15;
 	}
 	return 0;
@@ -178,7 +179,7 @@ int input_ndiv(const char*buf, struct INPUT_INFO*ii)
 //---реализация подпрограммы
 int input(FILE*in, struct INPUT_INFO*ii)
 {
-	setlocale(LC_ALL, "Russian");
+	//	setlocale(LC_ALL, "Russian");
 	//ввод построчно, требуется буфер для записи текущей строки
 	char buf[1024];//бyфер текущей строки 1024 символа
 	int r = 0;//результат ввода
@@ -201,19 +202,24 @@ int input(FILE*in, struct INPUT_INFO*ii)
 			break;
 		case 'S': //если видим в строке символ S - то выполняем программу для сечения
 			r = input_sec(buf + n + 1, ii); //ввод параметров сечения
+			break;
 		case 'B':
 			r = input_beam(buf + n + 1, ii); //ввод параметров участка балки
+			break;
 		case 'D':
 			r = input_displ(buf + n + 1, ii); //ввод заданного перемещения
+			break;
 		case 'F':
 			r = input_force(buf + n + 1, ii); //ввод заданной силы
+			break;
 		case 'Q':
 			r = input_q(buf + n + 1, ii); //ввод распределенной нагрузки
+			break;
 		case 'N':
 			r = input_ndiv(buf + n + 1, ii); //ввод числа разбиений
 			break;
 		default: //если текст не совпал ни один из вышеперечисленных вариантов
-			fprintf(stderr, "Плохие параметры, йопта: %c\n", buf[n]); //вывод ошибок stderr %c -char
+			fprintf(stderr, "bad vars: %c\n", buf[n]); //вывод ошибок stderr %c -char
 			r = -1; //признак ошибки
 		}
 		if (r) break;//прерывание ввода данных

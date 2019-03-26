@@ -1,5 +1,7 @@
+
 #include "common.h"
 #include <memory.h> //для memset
+#include <string.h>
 
 //Подпрограмма формирования матрицы жетскостей элемента
 int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4])
@@ -28,15 +30,15 @@ int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4])
 }
 
 // подпрограмма формирования матрицы жесткостей конструкции
-int formk(const struct INPUT_INFO*ii, struct SOLVE_INFO*si) 
+int formk(const struct INPUT_INFO*ii, struct SOLVE_INFO*si)
 {
 	int ie, df, iv;
 	const double L = 1e20; //параметр метода Аронса-Пейна точность -20 степень
-	//очистка матрицы
-	memset(si,0,sizeof(*si)); //очистка параметров решателя
-	//число степеней свободы задачи
+						   //очистка матрицы
+	memset(si, 0, sizeof(*si)); //очистка параметров решателя
+								//число степеней свободы задачи
 	si->ndf = (ii->n_beam + 1) * 2;
-	for (ie=0,df=0;ie<ii->n_beam ; ++ie,df+=2 )
+	for (ie = 0, df = 0; ie<ii->n_beam; ++ie, df += 2)
 	{
 		double Ke[4][4], Fe[4]; //матр. жесткостей
 		int i, j;
