@@ -46,7 +46,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\laba\input.txt">
+    <Text Include="input.txt">
       <Filter>Исходные файлы</Filter>
     </Text>
   </ItemGroup>

@@ -16,6 +16,8 @@ int getfe(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, int ie, double
 						   //for (int i=0;i<4;i++)
 						   // {F[i]= -Fe[i]+Ke[i][0] * Qe[0] + Ke[i][1] * Qe[1] + Ke[i][2] * Qe[2] + Ke[i][3] * Qe[3];}
 
+	//ПРОВЕРИТЬ
+
 	Fe[0] = -Fe[0] + Ke[0][0] * Qe[0] + Ke[0][1] * Qe[1] + Ke[0][2] * Qe[2] + Ke[0][3] * Qe[3];
 	Fe[1] = -Fe[1] + Ke[1][0] * Qe[0] + Ke[1][1] * Qe[1] + Ke[1][2] * Qe[2] + Ke[1][3] * Qe[3];
 	Fe[2] = -Fe[2] + Ke[2][0] * Qe[0] + Ke[2][1] * Qe[1] + Ke[2][2] * Qe[2] + Ke[2][3] * Qe[3];
@@ -30,6 +32,8 @@ int getri(const struct INPUT_INFO*ii, const double Qe[4], const double Fe[4],
 	const struct BEAM_INFO*beam = ii->beam + ie;//параметры текущего участка
 	double p1 = beam->p1, dp = beam->p2 - beam->p1;
 	double EIx = ii->mat[beam->mat].E*ii->sec[beam->sec].Ix;
+
+	//ПРОВЕРИТЬ
 
 	//вычисление актуального значения распред нагрузки
 	ri->p = p1 + dp * z / beam->l; //z/l =безразмерный от 0 до 1, то p = p1;p2

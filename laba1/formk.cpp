@@ -11,6 +11,9 @@ int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4])
 	double l = beam->l;
 	double EIx = ii->mat[beam->mat].E*ii->sec[beam->sec].Ix;
 	double dp = beam->p2 - beam->p1; //когда нагрузка линейно изменяется по элементам
+
+	//ПРОВЕРИТЬ
+
 	K[0][0] = K[2][2] = 12.0*EIx / l / l / l; //нули важно писать, т.к. при вычислении констант целочисленное деление, а с точкой вещественное деление
 	K[0][1] = K[1][0] = K[0][3] = K[3][0] = 6.0*EIx / l / l;
 	K[0][2] = K[2][0] = -K[0][0];
@@ -28,6 +31,9 @@ int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4])
 	F[3] += -dp * 1.0 / 20.0*l*l;
 	return 0;
 }
+
+
+//ПРОВЕРИТЬ
 
 // подпрограмма формирования матрицы жесткостей конструкции
 int formk(const struct INPUT_INFO*ii, struct SOLVE_INFO*si)
