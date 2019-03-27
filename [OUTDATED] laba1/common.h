@@ -116,7 +116,7 @@ int solve(struct SOLVE_INFO*si);//указатель на структуру
 int getfe(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, int ie, double Fe[4]); //результаты решения как константы
 
 //подпрограмма вычисления результатов
-int result(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, FILE*out);
+int results(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, FILE*out);
 
 
 #endif //COMMON_H

@@ -95,6 +95,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -155,9 +156,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="formk.cpp" />
+    <ClCompile Include="formk2.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="laba1.cpp" />
     <ClCompile Include="result.cpp" />
+    <ClCompile Include="result2.cpp" />
     <ClCompile Include="Solve.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

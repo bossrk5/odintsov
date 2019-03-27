@@ -39,10 +39,10 @@ static int input_sec(const char*buf, struct INPUT_INFO*ii)
 	int n;//число прочитанных параметров
 	int ind;//индекс в таблице сечений
 	double Ix = 1; //осевой момент инерции и момент сопротивления изгибу
-	double Wx=1;
+	double Wx=0;
 	//char* pEnd;
 	printf("%s\n", buf);
-	n = sscanf(buf, "%d %lg %lg", &ind, &Ix, &Wx);
+	n = sscanf(buf, "%d %lf %lf", &ind, &Ix, &Wx);
 	
 	
 	//ind = strtod(buf, &pEnd);
