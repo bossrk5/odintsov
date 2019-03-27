@@ -37,12 +37,14 @@ int getri(const struct INPUT_INFO*ii, const double Qe[4], const double Fe[4],
 
 	//вычисление актуального значени€ распред нагрузки
 	ri->p = p1 + dp * z / beam->l; //z/l =безразмерный от 0 до 1, то p = p1;p2
-								   //поперечна€ сила
+	//поперечна€ сила
 	ri->Qy = Fe[0] + p1 * z + dp * z*z / 2.0 / beam->l;
 	//изгибающий момент в сечении
 	ri->Mx = -Fe[1] + Fe[0] * z +
 		p1 * z * z / 2.0 +
 		dp * z*z*z / 6.0 / beam->l;
+
+	//------------------------- ќ—я -------------------------
 	//угол поворота нормали
 	ri->theta = Qe[1] + (-Fe[1] * z +
 		Fe[0] * z*z / 2.0 +
@@ -55,6 +57,7 @@ int getri(const struct INPUT_INFO*ii, const double Qe[4], const double Fe[4],
 		dp * z*z*z*z*z / 120.0 / beam->l) / EIx;
 	//максимальные напр€жени€
 	ri->sigma = ri->Mx / ii->sec[beam->sec].Wx;
+
 	//по модулю
 	if (ri->sigma < 0)
 	{
