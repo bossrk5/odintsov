@@ -1,0 +1,9 @@
+set terminal pdf enchanced
+set output "test.pdf"
+
+set style data lines
+set zeroaxis
+
+plot "output.txt" using 1:3 title "p(z)"
+plot "output.txt" using 1:4 title "Q_y(z)"
+plot "output.txt" using 1:5 title "M_x(z)"

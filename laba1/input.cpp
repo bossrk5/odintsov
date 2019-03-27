@@ -42,13 +42,13 @@ static int input_sec(const char*buf, struct INPUT_INFO*ii)
 	//char* pEnd;
 	double Wx = 1;
 
-	n = sscanf(buf, "%d %lf %lf\n", &ind, &Ix, &Wx);
+	n = sscanf(buf, "%d %lg %lf\n", &ind, &Ix, &Wx);
 
 	
 	//ind = strtod(buf, &pEnd);
 	//Ix = strtod(pEnd, &pEnd);
 	//Wx = strtod(pEnd, NULL);
-	printf("%d, %f, %f\n",ind, Ix, Wx);
+	printf("%d, %6.3f, %6.3f\n",ind, Ix, Wx);
 
 	if (n != 3) //ошибка
 	{
