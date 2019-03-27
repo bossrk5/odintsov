@@ -44,7 +44,6 @@ int getri(const struct INPUT_INFO*ii, const double Qe[4], const double Fe[4],
 		p1 * z * z / 2.0 +
 		dp * z*z*z / 6.0 / beam->l;
 
-	//-------------------------КОСЯК-------------------------
 	//угол поворота нормали
 	ri->theta = Qe[1] + (-Fe[1] * z +
 		Fe[0] * z*z / 2.0 +
@@ -68,7 +67,7 @@ int getri(const struct INPUT_INFO*ii, const double Qe[4], const double Fe[4],
 }
 
 //подпрограмма вычисления результатов
-int results(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, FILE*out)
+int result(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, FILE*out)
 {
 	//нужно пройти по элементам, на каждом элементе по промежуч точке, в каждой точке набор результатов выдать
 	//в выходной файл
@@ -102,8 +101,11 @@ int results(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, FILE*out)
 			//вычисление результатов в сечении
 			getri(ii, si->Q + ie * 2, Fe, ie, z, &ri);
 			//вывод результатов в файл
-			fprintf(out, "%g %f %g %g %g %g %g %g\n",
+			fprintf(out, "%g %d %g %g %g %g %g %g\n",
 				ri.z, ri.ie, ri.p, ri.Qy, ri.Mx, ri.theta, ri.v, ri.sigma);
+			//У МЕНЯ %f был
+			/*fprintf(out, "%g %f %g %g %g %g %g %g\n",
+				ri.z, ri.ie, ri.p, ri.Qy, ri.Mx, ri.theta, ri.v, ri.sigma);*/
 		}
 		//координату левого узла текущего элемента увеличить на длину элемента
 		//переходим к след. элементу

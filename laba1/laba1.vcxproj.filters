@@ -41,7 +41,7 @@
     <ClCompile Include="Solve.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="results.cpp">
+    <ClCompile Include="result.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

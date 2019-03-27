@@ -1,0 +1,45 @@
+# depslib dependency file v1.0
+1446667744 source:c:\users\admin\documents\mood\lab1\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1553587930 source:c:\work\mood\lab1\formk.c
+	"common.h"
+	<string.h>
+
+1552379122 c:\work\mood\lab1\common.h
+	<stdio.h>
+
+1553588293 source:c:\work\mood\lab1\input.c
+	"common.h"
+	<string.h>
+
+1553587328 source:c:\work\mood\lab1\main.c
+	"common.h"
+
+1553588168 source:c:\work\mood\lab1\result.c
+	"common.h"
+
+1553588209 source:c:\work\mood\lab1\solve.c
+	"common.h"
+
+1553706014 source:c:\users\vladimir\documents\github\odintsov\fine\formk.c
+	"common.h"
+	<string.h>
+
+1553707881 c:\users\vladimir\documents\github\odintsov\fine\common.h
+	<stdio.h>
+
+1553703650 source:c:\users\vladimir\documents\github\odintsov\fine\input.c
+	"common.h"
+	<string.h>
+
+1553703657 source:c:\users\vladimir\documents\github\odintsov\fine\main.c
+	"common.h"
+
+1553703662 source:c:\users\vladimir\documents\github\odintsov\fine\result.c
+	"common.h"
+
+1553703664 source:c:\users\vladimir\documents\github\odintsov\fine\solve.c
+	"common.h"
+

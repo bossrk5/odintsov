@@ -38,17 +38,18 @@ static int input_sec(const char*buf, struct INPUT_INFO*ii)
 {
 	int n;//число прочитанных параметров
 	int ind;//индекс в таблице сечений
-	double Ix; //осевой момент инерции и момент сопротивлени€ изгибу
+	double Ix, Wx; //осевой момент инерции и момент сопротивлени€ изгибу
 	//char* pEnd;
-	double Wx = 1;
-
-	n = sscanf(buf, "%d %lg %lf\n", &ind, &Ix, &Wx);
-
+	printf("%s\n", buf);
+	n = sscanf(buf, "%d %lg %lg", &ind, &Ix, &Wx);
+	
 	
 	//ind = strtod(buf, &pEnd);
 	//Ix = strtod(pEnd, &pEnd);
 	//Wx = strtod(pEnd, NULL);
-	printf("%d, %6.3f, %6.3f\n",ind, Ix, Wx);
+	printf("%d\n", ind);
+	printf("%f\n", Ix);
+	printf("%f\n", Wx);
 
 	if (n != 3) //ошибка
 	{
@@ -135,7 +136,7 @@ static int input_force(const char*buf, struct INPUT_INFO*ii)
 		fprintf(stderr, "ѕлохие силы/ момент: %s\n", buf);//вывод ошибки
 		return -11;
 	}
-	force->nd = ii->n_beam;//номер узла
+	force->nd = ii->n_beam;//номер узла совпадает с нломером участка
 	++ii->n_force;//увеличение индекса в табл. сил
 	return 0;
 }
@@ -160,7 +161,7 @@ static int input_q(const char*buf, struct INPUT_INFO*ii)
 		beam->p2 = beam->p1;
 		break;
 	default:
-		fprintf(stderr, "ѕлохие силы: %s\n", buf);//вывод ошибки
+		fprintf(stderr, "ѕлохие распределенные силы: %s\n", buf);//вывод ошибки
 		return -13;
 	}
 	return 0;
@@ -200,6 +201,7 @@ int input(FILE*in, struct INPUT_INFO*ii)
 	while (fgets(buf, sizeof(buf), in))//сист функци€ ввода строки in - дескриптор файла
 	{
 		int n = strspn(buf, " \t");//число нензначащих символов (в начале строки) пропускаем пробелы и \t - символ табул€ции
+		//int n = strspn(buf, " \n");
 		switch (buf[n]) //выбор, buf элемент массива
 		{
 		case '#':
