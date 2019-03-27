@@ -38,11 +38,18 @@ static int input_sec(const char*buf, struct INPUT_INFO*ii)
 {
 	int n;//число прочитанных параметров
 	int ind;//индекс в таблице сечений
-	double Ix=0, Wx=0; //осевой момент инерции и момент сопротивлени€ изгибу
+	double Ix; //осевой момент инерции и момент сопротивлени€ изгибу
+	//char* pEnd;
+	double Wx = 1;
 
+	n = sscanf(buf, "%d %lf %lf\n", &ind, &Ix, &Wx);
 
+	
+	//ind = strtod(buf, &pEnd);
+	//Ix = strtod(pEnd, &pEnd);
+	//Wx = strtod(pEnd, NULL);
+	printf("%d, %f, %f\n",ind, Ix, Wx);
 
-	n = sscanf(buf, "%d %lf %lg", &ind, &Ix, &Wx);
 	if (n != 3) //ошибка
 	{
 		fprintf(stderr, "ѕлохое сечение: %s\n", buf);
