@@ -1,11 +1,11 @@
 #pragma once
-#ifndef COMMON_H // запрос не открывается ли этот фай повторно
+#ifndef COMMON_H // def
 #define COMMON_H
 
 
 #include <stdio.h>
-//Константы
-#define MAX_BEAM 1000 //Максимальное число участков
+//ГЉГ®Г­Г±ГІГ Г­ГІГ»
+#define MAX_BEAM 1000 //ГЊГ ГЄГ±ГЁГ¬Г Г«ГјГ­Г®ГҐ Г·ГЁГ±Г«Г® ГіГ·Г Г±ГІГЄГ®Гў
 #define MAX_MAT 100
 #define MAX_SEC 100
 #define MAX_DISPL 100
@@ -13,9 +13,9 @@
 #define DEF_NDIV 3
 
 
-//Структуры данных
-#define MAX_NDF ((MAX_BEAM + 1) * 2) //максимальное число степеней свободы
-#define MAX_BAND 4 //полуширина ленты
+//Г‘ГІГ°ГіГЄГІГіГ°Г» Г¤Г Г­Г­Г»Гµ
+#define MAX_NDF ((MAX_BEAM + 1) * 2) //Г¬Г ГЄГ±ГЁГ¬Г Г«ГјГ­Г®ГҐ Г·ГЁГ±Г«Г® Г±ГІГҐГЇГҐГ­ГҐГ© Г±ГўГ®ГЎГ®Г¤Г»
+#define MAX_BAND 4 //ГЇГ®Г«ГіГёГЁГ°ГЁГ­Г  Г«ГҐГ­ГІГ»
 
 struct MAT_INFO
 {
@@ -51,33 +51,33 @@ struct INPUT_INFO
 {
 	struct MAT_INFO mat[MAX_MAT];
 	struct SEC_INFO sec[MAX_SEC];
-	int n_beam;//число участков
-	struct BEAM_INFO beam[MAX_BEAM];//таблица участокв
+	int n_beam;//Г·ГЁГ±Г«Г® ГіГ·Г Г±ГІГЄГ®Гў
+	struct BEAM_INFO beam[MAX_BEAM];//ГІГ ГЎГ«ГЁГ¶Г  ГіГ·Г Г±ГІГ®ГЄГў
 	int n_displ;
 	struct DISPL_INFO displ[MAX_DISPL];
 	int n_force;
 	struct FORCE_INFO force[MAX_FORCE];
-	int ndiv_cur;//число разбиений
+	int ndiv_cur;//Г·ГЁГ±Г«Г® Г°Г Г§ГЎГЁГҐГ­ГЁГ©
 };
-//структура состояния решателя
+//Г±ГІГ°ГіГЄГІГіГ°Г  Г±Г®Г±ГІГ®ГїГ­ГЁГї Г°ГҐГёГ ГІГҐГ«Гї
 struct SOLVE_INFO
 {
-	int ndf;//число степеней свободы
-	double K[MAX_NDF][MAX_BAND];//Лента матрицы жесткости
-	double F[MAX_NDF];//вектор узовых сил и моментов
-	double Q[MAX_NDF];//вектор усзловых степеней свободы
+	int ndf;//Г·ГЁГ±Г«Г® Г±ГІГҐГЇГҐГ­ГҐГ© Г±ГўГ®ГЎГ®Г¤Г»
+	double K[MAX_NDF][MAX_BAND];//Г‹ГҐГ­ГІГ  Г¬Г ГІГ°ГЁГ¶Г» Г¦ГҐГ±ГІГЄГ®Г±ГІГЁ
+	double F[MAX_NDF];//ГўГҐГЄГІГ®Г° ГіГ§Г®ГўГ»Гµ Г±ГЁГ« ГЁ Г¬Г®Г¬ГҐГ­ГІГ®Гў
+	double Q[MAX_NDF];//ГўГҐГЄГІГ®Г° ГіГ±Г§Г«Г®ГўГ»Гµ Г±ГІГҐГЇГҐГ­ГҐГ© Г±ГўГ®ГЎГ®Г¤Г»
 };
-//подгрограммы
-int input(FILE*in, struct INPUT_INFO*ii);//подпрограммы вводы исходных данных
-int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4]);//подпрогммма формирования матрицы жесткостей элемента
-//формирование матрицы всей коснтрукции (Ансамблирование)
+//ГЇГ®Г¤ГЈГ°Г®ГЈГ°Г Г¬Г¬Г»
+int input(FILE*in, struct INPUT_INFO*ii);//ГЇГ®Г¤ГЇГ°Г®ГЈГ°Г Г¬Г¬Г» ГўГўГ®Г¤Г» ГЁГ±ГµГ®Г¤Г­Г»Гµ Г¤Г Г­Г­Г»Гµ
+int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4]);//ГЇГ®Г¤ГЇГ°Г®ГЈГ¬Г¬Г¬Г  ГґГ®Г°Г¬ГЁГ°Г®ГўГ Г­ГЁГї Г¬Г ГІГ°ГЁГ¶Г» Г¦ГҐГ±ГІГЄГ®Г±ГІГҐГ© ГЅГ«ГҐГ¬ГҐГ­ГІГ 
+//ГґГ®Г°Г¬ГЁГ°Г®ГўГ Г­ГЁГҐ Г¬Г ГІГ°ГЁГ¶Г» ГўГ±ГҐГ© ГЄГ®Г±Г­ГІГ°ГіГЄГ¶ГЁГЁ (ГЂГ­Г±Г Г¬ГЎГ«ГЁГ°Г®ГўГ Г­ГЁГҐ)
 int formk(const struct INPUT_INFO*ii, struct SOLVE_INFO*si);
-//что такое указатель? число, которое описывет положение этого блока в памяти. Указатель *a
-//подпрограмма решения СЛАУ
+//Г·ГІГ® ГІГ ГЄГ®ГҐ ГіГЄГ Г§Г ГІГҐГ«Гј? Г·ГЁГ±Г«Г®, ГЄГ®ГІГ®Г°Г®ГҐ Г®ГЇГЁГ±Г»ГўГҐГІ ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ ГЅГІГ®ГЈГ® ГЎГ«Г®ГЄГ  Гў ГЇГ Г¬ГїГІГЁ. Г“ГЄГ Г§Г ГІГҐГ«Гј *a
+//ГЇГ®Г¤ГЇГ°Г®ГЈГ°Г Г¬Г¬Г  Г°ГҐГёГҐГ­ГЁГї Г‘Г‹ГЂГ“
 int solve(struct SOLVE_INFO*si);
-//подпрогрммма вычисления узловых сил
+//ГЇГ®Г¤ГЇГ°Г®ГЈГ°Г¬Г¬Г¬Г  ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГї ГіГ§Г«Г®ГўГ»Гµ Г±ГЁГ«
 int getfe(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, int ie, double Fe[4]);
-//подпрограмма вычисления результатов
+//ГЇГ®Г¤ГЇГ°Г®ГЈГ°Г Г¬Г¬Г  ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГї Г°ГҐГ§ГіГ«ГјГІГ ГІГ®Гў
 int result(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, FILE*out);
 
 
