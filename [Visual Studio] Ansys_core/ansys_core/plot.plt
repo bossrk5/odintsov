@@ -7,6 +7,8 @@ set zeroaxis
 set grid
 set autoscale y
 #
+#set yrange [10:-10]
+set style line 1 rgb "red" lw 3
 set title "Распределенная нагрузка"
 unset key
 set ylabel 'p, Н/мм'

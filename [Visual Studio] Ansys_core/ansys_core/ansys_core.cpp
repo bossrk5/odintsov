@@ -10,14 +10,14 @@ int main()
 	//setlocale(0, "");  //русский
 	int r;//результат выполнения текущего шага
 	FILE*in, *out;
-	in = fopen("input.txt", "rt");//открывается входной файл
+	in = fopen("balka.txt" , "rt");//открывается входной файл
 	if (!in) { //ошибка открытия файла (in=NULL)
 		fprintf(stderr, "error open file\n");
 		return 1;
 	}
 	r = input(in, &ii);//&-указатель на структуру ввод исходных данных
 	if (r) {//если r!=0  ошибка ввода исходных данных
-		fprintf(stderr, "nput error: %d\n", r);
+		fprintf(stderr, "input error: %d\n", r);
 		return 2;
 	}
 	fclose(in);	//закрывается файл
