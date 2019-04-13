@@ -41,6 +41,7 @@ int main()
 		fprintf(stderr, "Error writing file: %d\n", r);
 		return 6;
 	}
+
 	fclose(out);	//закрываем прогу
 	printf("Solution success!\n");
 	return 0;
