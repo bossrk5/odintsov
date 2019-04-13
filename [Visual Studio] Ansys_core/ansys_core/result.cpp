@@ -1,11 +1,11 @@
 #include "common.h"
 
 //подпрогрммма вычисления узловых сил
-int getfe(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, int ie, double Fe[4])
+int getfe(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, int ie, double Fe[4])//результаты решения как константы
 {
 	double Ke[4][4];
-	const double *Qe = si->Q + ie * 2;
-	formke(ii, ie, Ke, Fe);
+	const double *Qe = si->Q + ie * 2;//указатель=массив, Qe - вычисленный вектор узловых степеней элемента
+	formke(ii, ie, Ke, Fe);//Fe - аргумент
 	Fe[0] = -Fe[0] + Ke[0][0] * Qe[0] + Ke[0][1] * Qe[1] + Ke[0][2] * Qe[2] + Ke[0][3] * Qe[3];
 	Fe[1] = -Fe[1] + Ke[1][0] * Qe[0] + Ke[1][1] * Qe[1] + Ke[1][2] * Qe[2] + Ke[1][3] * Qe[3];
 	Fe[2] = -Fe[2] + Ke[2][0] * Qe[0] + Ke[2][1] * Qe[1] + Ke[2][2] * Qe[2] + Ke[2][3] * Qe[3];
@@ -22,7 +22,7 @@ int getri(const struct INPUT_INFO*ii, const double Qe[4], const double Fe[4],
 	double EIx = ii->mat[beam->mat].E * ii->sec[beam->sec].Ix;
 
 
-	ri->p = p1 + dp * z / beam->l;
+	ri->p = p1 + dp * z / beam->l;//z/l =безразмерный от 0 до 1, то p = p1;p2
 	ri->Qy = Fe[0] + p1 * z + dp * z*z / 2.0 / beam->l; //значение попересной силы
 	ri->Mx = -Fe[1] + Fe[0] * z +
 		p1 * z*z / 2.0 +

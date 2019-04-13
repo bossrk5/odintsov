@@ -38,5 +38,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
+    <Text Include="balka.txt" />
   </ItemGroup>
 </Project>

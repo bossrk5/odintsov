@@ -6,8 +6,8 @@ int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4])//под
 	const struct BEAM_INFO*beam = ii->beam + ie; //текущий элемент
 	double l = beam->l;
 	double EIx = ii->mat[beam->mat].E*ii->sec[beam->sec].Ix;
-	double dp = beam->p2 - beam->p1;
-	K[0][0] = K[2][2] = 12.0*EIx / l / l / l;
+	double dp = beam->p2 - beam->p1; //когда нагрузка линейно измен¤етс¤ по элементам
+	K[0][0] = K[2][2] = 12.0*EIx / l / l / l;//нули важно писать, т.к. при вычислении констант целочисленное деление, а с точкой вещественное деление
 	// ОШИБКА Я 0 НАПИСАЛ
 	K[0][1] = K[1][0] = K[0][3] = K[3][0] = 6.0*EIx / l / l;
 	//У МАТРОСОВОЙ ТАК:
@@ -29,17 +29,17 @@ int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4])//под
 int formk(const struct INPUT_INFO*ii, struct SOLVE_INFO*si)
 {
 	int ie, df, iv;
-	const double L = 1e20; //чтобы исп метод айрнса пейна
+	const double L = 1e20; //параметр метода јронса-ѕейна точность -20 степень
 	memset(si, 0, sizeof(*si));//очистка параметров решателя
 	si->ndf = (ii->n_beam + 1) * 2;//число степеней свободы задачи
 	for (ie = 0, df = 0; ie < ii->n_beam; ++ie, df += 2) {
-		double Ke[4][4], Fe[4];
+		double Ke[4][4], Fe[4];//матр. жесткостей
 		int i, j;
 		formke(ii, ie, Ke, Fe);//вычисление МЖ отдельного элемента
 		for (i = 0; i < 4; ++i) {//цикл по строкам МЖ эл-та
 			si->F[df + i] += Fe[i];
 			for (j = i; j < 4; ++j) {//цикл по столбцам выше диагонали
-				si->K[df + i][j - i] += Ke[i][j];
+				si->K[df + i][j - i] += Ke[i][j]; //строка и столбец неотрицательные
 			}
 		}
 	}
@@ -47,7 +47,7 @@ int formk(const struct INPUT_INFO*ii, struct SOLVE_INFO*si)
 		int ndf = ii->force[iv].nd * 2 + ii->force[iv].df;
 		si->F[ndf] += ii->force[iv].f; //добавляемое значение силы
 	}
-	for (iv = 0; iv < ii->n_displ; ++iv) {//цикл по заданным перемещениям
+	for (iv = 0; iv < ii->n_displ; ++iv) { //цикл по заданным перемещ/поворотам
 		int ndf = ii->displ[iv].nd * 2 + ii->displ[iv].df;
 		si->K[ndf][0] = L;//метод Айронса-Пейна
 		si->F[ndf] = L * ii->displ[iv].d;

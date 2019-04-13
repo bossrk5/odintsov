@@ -6,82 +6,90 @@
 #include <stdio.h>
 //Константы
 #define MAX_BEAM 1000 //Максимальное число участков
-#define MAX_MAT 100
-#define MAX_SEC 100
-#define MAX_DISPL 100
-#define MAX_FORCE 100
-#define DEF_NDIV 3
+#define MAX_MAT 100  //Максимальное число материалов
+#define MAX_SEC 100  //Максимальное число сечений
+#define MAX_DISPL 100 //Максимальное число заданных перемещений
+#define MAX_FORCE 100 //Максимальное число сосредоточенных сил
+#define DEF_NDIV 3   //(2 по краям и 1 по середине элемента) Максимальное число разбиений по умолчанию чтобы понять что происходит внутри элемента
 
 
-//Структуры данных
+//-----Структуры данных---
 #define MAX_NDF ((MAX_BEAM + 1) * 2) //максимальное число степеней свободы
-#define MAX_BAND 4 //полуширина ленты
-
-struct MAT_INFO
+#define MAX_BAND 4//Полуширина ленты матрицы жесткостей
+//-----Структуры данных---
+struct MAT_INFO //Свойства материала
 {
-	double E;
+	double E; //2ная точность величины Модуль Юнга
 };
-struct SEC_INFO
+struct SEC_INFO //Параметры сечения
 {
-	double Ix;
-	double Wx;
+	double Ix; //Осевой момент инерции сечения
+	double Wx; //Момент сопротивления сечения изгибу
 };
-struct BEAM_INFO
+struct BEAM_INFO //параметры участка
 {
-	double l, p1, p2;
-	int mat, sec, ndiv;
+	double l, p1, p2; //длина балки, распределенная нагрузка нагрузка в начале участка, нагрузка  с правого торца
+	int mat, sec, ndiv; //номера материала, сечения, количество разбиений
 };
-struct DISPL_INFO
+struct DISPL_INFO//заданные перемещения
 {
-	int nd, df;
-	double d;
+	int nd, df; //номер узла, номер степени свободы
+	double d;//величина перемещения
 };
-struct FORCE_INFO
+struct FORCE_INFO//заданные силы
 {
-	int nd, df;
-	double f;
+	int nd, df;//номер узла, номер степени свободы
+	double f;//величина силы F или момента
 };
-struct RESULT_INFO
+struct RESULT_INFO//строка результатов
 {
-	double z;
-	int ie;
+	double z;//координата от левого торца балки в глобальной системе
+	int ie;//номер элемента
 	double p, Qy, Mx, theta, v, sigma;
 };
+//Входные данные задачи
 struct INPUT_INFO
 {
-	struct MAT_INFO mat[MAX_MAT];
-	struct SEC_INFO sec[MAX_SEC];
+	struct MAT_INFO mat[MAX_MAT]; // таблица материалов
+	struct SEC_INFO sec[MAX_SEC]; // таблица сечений
 	int n_beam;//число участков
 	struct BEAM_INFO beam[MAX_BEAM];//таблица участокв
-	int n_displ;
-	struct DISPL_INFO displ[MAX_DISPL];
-	int n_force;
-	struct FORCE_INFO force[MAX_FORCE];
-	int ndiv_cur;//число разбиений
+	int n_displ;//число заданных перемещений
+	struct DISPL_INFO displ[MAX_DISPL];//таблица перемещений
+	int n_force;//число заданных сил
+	struct FORCE_INFO force[MAX_FORCE];//таблица сосредоточенных сил
+	int ndiv_cur;//текущее число разбиений
 };
-//структура состояния решателя
+// Все что используется для решения задачи
+//-- Структура состояния решателя---
 struct SOLVE_INFO
 {
 	int ndf;//число степеней свободы
+		//векторы и матрицы для формирования решения СУ
 	double K[MAX_NDF][MAX_BAND];//Лента матрицы жесткости
 	double F[MAX_NDF];//вектор узовых сил и моментов
-	double Q[MAX_NDF];//вектор усзловых степеней свободы
+	double Q[MAX_NDF];//вектор узловых степеней свободы
 };
-//подгрограммы
-int input(FILE*in, struct INPUT_INFO*ii);//подпрограммы вводы исходных данных
-int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4]);//подпрогммма формирования матрицы жесткостей элемента
-//формирование матрицы всей коснтрукции (Ансамблирование)
-int formk(const struct INPUT_INFO*ii, struct SOLVE_INFO*si);
-//что такое указатель? число, которое описывет положение этого блока в памяти. Указатель *a
-//подпрограмма решения СЛАУ
+//---------Подпрограммы-----------------
+int input(FILE*in, struct INPUT_INFO*ii);//подпрограмма ввода исходных данных FILE*in - системная библиотека для обращения к файлам
+//Подпрограмма формирования матрицы жетскостей элемента
+int formke(const struct INPUT_INFO*ii, int ie, double K[4][4], double F[4]);
+//формирование матрицы всей коснтрукции (Ансамблирование) 
+int formk(const struct INPUT_INFO*ii, struct SOLVE_INFO*si);// подпрограмма формирования матрицы жесткостей конструкции
+//const struct INPUT_INFO*ii - указатель на структуру (*ii)
+//указатель ищет данные по адресу в памяти (значение адреса)
+//можем обращаться к полям si.ndf; или si->ndf по указателю начало структуры определяем и ищем в памяти положение поле ndf;
+//при изменении поля ndf его значение в структуре сохранится
+//при модификации аргументов функции, аргументы не сохраняются
+
+//в разных структурах поля могут иметь одинаковые имена
+//переменные, в которые записали структуру, обозвали по имени структуры Input Info = ii Solve Info = si и т.д.
+
+//подпрограмма решения СЛАУ. Система независимая от исходных данных (все в солфинфо)
 int solve(struct SOLVE_INFO*si);
-//подпрогрммма вычисления узловых сил
+//подпрограмма вычисления узловых сил, приходящихся на конкретный элемент Fe
 int getfe(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, int ie, double Fe[4]);
 //подпрограмма вычисления результатов
 int result(const struct INPUT_INFO*ii, const struct SOLVE_INFO*si, FILE*out);
-
-
-
-
 
 #endif // COMMON_H
