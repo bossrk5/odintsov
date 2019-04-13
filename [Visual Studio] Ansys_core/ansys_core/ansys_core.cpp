@@ -1,12 +1,14 @@
 #include <iostream>
 #include "common.h"
 
+
 struct INPUT_INFO ii;
 struct SOLVE_INFO si;
-
+enum { MAXL = 128, MAXC = 256 };
 
 int main()
 {
+	char fnbase[MAXC] = "", fnplt[MAXC] = ""; //для генер
 	//setlocale(0, "");  //русский
 	int r;//результат выполнения текущего шага
 	FILE*in, *out;
@@ -41,6 +43,11 @@ int main()
 		fprintf(stderr, "Error writing file: %d\n", r);
 		return 6;
 	}
+	//Create PLT
+		/* create 'plot' file 'fn.plt' */
+	//strcpy(fnplt, fnwoext(fnbase, fn));
+	//strcat(fnplt, ".plt");
+
 
 	fclose(out);	//закрываем прогу
 	printf("Solution success!\n");
