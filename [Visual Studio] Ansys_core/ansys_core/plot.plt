@@ -33,38 +33,38 @@ set grid ytics
 set grid mxtics
 set grid mytics
 
-set title "Р Р°СЃРїСЂРµРґРµР»РµРЅРЅР°СЏ РЅР°РіСЂСѓР·РєР°"
+set title "Распределенная нагрузка"
 unset key
-set ylabel 'p, Рќ/РјРј'
-set xlabel 'z, РјРј'
+set ylabel 'p, Н/мм'
+set xlabel 'z, мм'
 plot "output.txt" using 1:3 title "p(z)"
 #
-set title "РџРѕРїРµСЂРµС‡РЅР°СЏ СЃРёР»Р°"
+set title "Поперечная сила"
 unset key
-set ylabel 'Q_y, Рќ'
-set xlabel 'z, Рј'
+set ylabel 'Q_y, Н'
+set xlabel 'z, м'
 plot "output.txt" using 1:4 title "Q_y(z)"
 #
-set title "РР·РіРёР±Р°СЋС‰РёР№ РјРѕРјРµРЅС‚ РІ СЃРµС‡РµРЅРёРё"
+set title "Изгибающий момент в сечении"
 unset key
-set ylabel 'M_x, Рќ*Рј'
-set xlabel 'z, РјРј'
+set ylabel 'M_x, Н*м'
+set xlabel 'z, мм'
 plot "output.txt" using 1:5 title "M_x(z)"
 #
-set title "РЈРіРѕР» РїРѕРІРѕСЂРѕС‚Р° РЅРѕСЂРјР°Р»Рё"
+set title "Угол поворота нормали"
 unset key
 set ylabel '{/Symbol J}, {/Symbol \260}'
-set xlabel 'z, РјРј'
+set xlabel 'z, мм'
 plot "output.txt" using 1:6 title "{/Symbol J}(z)"
 #
-set title "РџСЂРѕРіРёР±"
+set title "Прогиб"
 unset key
-set ylabel 'v, РјРј'
-set xlabel 'z, РјРј'
+set ylabel 'v, мм'
+set xlabel 'z, мм'
 plot "output.txt" using 1:7 title "v(z)"
 #
-set title "РњР°РєСЃРёРјР°Р»СЊРЅС‹Рµ РЅР°РїСЂСЏР¶РµРЅРёСЏ"
+set title "Максимальные напряжения"
 unset key
-set ylabel '{/Symbol s}_{max}, РњРџР°'
-set xlabel 'z, РјРј'
+set ylabel '{/Symbol s}_{max}, МПа'
+set xlabel 'z, мм'
 plot "output.txt" using 1:8 title "{/Symbol s}_{max}(z)"

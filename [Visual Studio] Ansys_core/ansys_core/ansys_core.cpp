@@ -1,8 +1,11 @@
 #include <iostream>
 #include "common.h"
-#include "gnuplot.h"
-#include "windows.h"
+#include "gnuplot.h" //Класс-обертка для работы с gnuplot
+#include "windows.h" //для Sleep
 #include <shellapi.h>
+
+#include <stdio.h>
+#include <stdlib.h>
 
 struct INPUT_INFO ii;
 struct SOLVE_INFO si;
@@ -45,20 +48,21 @@ int main()
 		fprintf(stderr, "Error writing file: %d\n", r);
 		return 6;
 	}
+
+
+	fclose(out);	//закрываем файл 
+
+	printf("Solution success!\n");
 	//Create PLTot
 	printf("Creating plots\n");
 	Gnuplot plot;
+	//Запускаем
 	plot("");
 	printf("Plots created\n");
-	// Открыть документ
-	//char fnbase[20] = "plots.pdf";
-	//char open[20] = "open";
-	//ShellExecute('', 'c:\windows\паркет.bmp', '', '', '');
-	//ShellExecute(GetDesktopWindow(), "open", "plots.pdf", NULL, NULL, SW_SHOWNORMAL);
+	Sleep(3000); // ждать 3 секунды
+	// Открыть документ стандартной рогой для чтения PDF
 	printf("Opening PDF\n");
 	ShellExecute(NULL, L"open", L"plots.pdf", NULL, NULL, SW_SHOWNORMAL);
 
-	fclose(out);	//закрываем прогу
-	printf("Solution success!\n");
 	return 0;
 }

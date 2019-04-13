@@ -9,7 +9,7 @@
 #ifdef WIN32
 #define GNUPLOT_NAME "plot.plt -persist"
 #else
-#define GNUPLOT_NAME "gnuplot -persist"
+#define GNUPLOT_NAME "plot.plt  -persist"
 #endif
 
 using std::string;
