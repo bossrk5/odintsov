@@ -1,14 +1,14 @@
 #include <iostream>
 #include "common.h"
-
+#include "gnuplot.h"
 
 struct INPUT_INFO ii;
 struct SOLVE_INFO si;
-enum { MAXL = 128, MAXC = 256 };
+//enum { MAXL = 128, MAXC = 256 };
 
 int main()
 {
-	char fnbase[MAXC] = "", fnplt[MAXC] = ""; //для генер
+	//char fnbase[MAXC] = "", fnplt[MAXC] = ""; //для генер
 	//setlocale(0, "");  //русский
 	int r;//результат выполнения текущего шага
 	FILE*in, *out;
@@ -47,7 +47,9 @@ int main()
 		/* create 'plot' file 'fn.plt' */
 	//strcpy(fnplt, fnwoext(fnbase, fn));
 	//strcat(fnplt, ".plt");
-
+	Gnuplot plot;
+	//plot("plot sin(x)");
+	//system("pause");
 
 	fclose(out);	//закрываем прогу
 	printf("Solution success!\n");
