@@ -2,6 +2,7 @@
 #include "common.h"
 #include "gnuplot.h"
 #include "windows.h"
+#include <shellapi.h>
 
 struct INPUT_INFO ii;
 struct SOLVE_INFO si;
@@ -45,11 +46,18 @@ int main()
 		return 6;
 	}
 	//Create PLTot
+	printf("Creating plots\n");
 	Gnuplot plot;
 	plot("");
+	printf("Plots created\n");
 	// Открыть документ
+	//char fnbase[20] = "plots.pdf";
+	//char open[20] = "open";
 	//ShellExecute('', 'c:\windows\паркет.bmp', '', '', '');
 	//ShellExecute(GetDesktopWindow(), "open", "plots.pdf", NULL, NULL, SW_SHOWNORMAL);
+	printf("Opening PDF\n");
+	ShellExecute(NULL, L"open", L"plots.pdf", NULL, NULL, SW_SHOWNORMAL);
+
 	fclose(out);	//закрываем прогу
 	printf("Solution success!\n");
 	return 0;
