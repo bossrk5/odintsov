@@ -1,6 +1,6 @@
 set terminal pdf 
 show terminal
-set output "test.pdf"
+set output "plots.pdf"
 #
 set style data lines
 set zeroaxis

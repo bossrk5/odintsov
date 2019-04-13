@@ -1,35 +1,58 @@
-#pragma once
-#ifndef GNUPLOT_H_
-#define GNUPLOT_H_
+// gnuplot.h
+#ifndef _GNUPLOT_H_
+#define _GNUPLOT_H_
+
+#include <cstdio>
 #include <string>
 #include <iostream>
-using namespace std;
-class Gnuplot {
+
+#ifdef WIN32
+#define GNUPLOT_NAME "plot.plt -persist"
+#else
+#define GNUPLOT_NAME "gnuplot -persist"
+#endif
+
+using std::string;
+using std::cerr;
+
+class Gnuplot
+{
 public:
 	Gnuplot();
 	~Gnuplot();
-	void operator ()(const string& command);
-	// send any command to gnuplot
+	void operator ()(const string& command); // отправить команду gnuplot
+
 protected:
 	FILE* gnuplotpipe;
 };
-Gnuplot::Gnuplot() {
-	// with -persist option you will see the windows as your program ends
-	//gnuplotpipe=_popen("gnuplot -persist","w");
-	//without that option you will not see the window
-	 // because I choose the terminal to output files so I don't want to see the window
-	gnuplotpipe = _popen("plot.plt", "w");
-	if (!gnuplotpipe) {
+
+Gnuplot::Gnuplot()
+{
+#ifdef WIN32
+	gnuplotpipe = _popen(GNUPLOT_NAME, "w");
+#else
+	gnuplotpipe = popen(GNUPLOT_NAME, "w");
+#endif
+
+	if (!gnuplotpipe)
+	{
 		cerr << ("Gnuplot not found !");
 	}
 }
-Gnuplot::~Gnuplot() {
+Gnuplot::~Gnuplot()
+{
 	fprintf(gnuplotpipe, "exit\n");
+
+#ifdef WIN32
 	_pclose(gnuplotpipe);
-}
-void Gnuplot::operator()(const string& command) {
-	fprintf(gnuplotpipe, "%s\n", command.c_str());
-	fflush(gnuplotpipe);
-	// flush is necessary, nothing gets plotted else
-};
+#else
+	pclose(gnuplotpipe);
 #endif
+}
+void Gnuplot::operator()(const string& command)
+{
+	fprintf(gnuplotpipe, "%s\n", command.c_str());
+	fflush(gnuplotpipe); //без fflush ничего рисоваться не будет
+};
+
+#endif // #ifndef _GNUPLOT_H_

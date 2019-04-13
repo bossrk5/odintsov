@@ -1,6 +1,7 @@
 #include <iostream>
 #include "common.h"
 #include "gnuplot.h"
+#include "windows.h"
 
 struct INPUT_INFO ii;
 struct SOLVE_INFO si;
@@ -43,14 +44,12 @@ int main()
 		fprintf(stderr, "Error writing file: %d\n", r);
 		return 6;
 	}
-	//Create PLT
-		/* create 'plot' file 'fn.plt' */
-	//strcpy(fnplt, fnwoext(fnbase, fn));
-	//strcat(fnplt, ".plt");
+	//Create PLTot
 	Gnuplot plot;
-	//plot("plot sin(x)");
-	//system("pause");
-
+	plot("");
+	// Открыть документ
+	//ShellExecute('', 'c:\windows\паркет.bmp', '', '', '');
+	//ShellExecute(GetDesktopWindow(), "open", "plots.pdf", NULL, NULL, SW_SHOWNORMAL);
 	fclose(out);	//закрываем прогу
 	printf("Solution success!\n");
 	return 0;
