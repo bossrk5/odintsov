@@ -5,6 +5,7 @@ set output "test.pdf"
 set style data lines
 set zeroaxis
 set grid
+set autoscale y
 #
 set title "Распределенная нагрузка"
 unset key
